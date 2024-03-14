@@ -1,20 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, View, FlatList, Text, StyleSheet, StatusBar } from 'react-native';
+import ProductCard from './app/components/ProductCard';
+import { scale } from 'react-native-size-matters';
+import Navbar from './app/components/Navbar'
+import BottomNavbar from './app/components/BottomNavbar'
+import ProductList from './app/components/ProductList';
+const App = () => {
+  const [data, setData] = useState([]);
+  const handleDataUpdate = (newData) => {
+    setData(newData);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-export default function App() {
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://ride-or-die.benjaminroche.fr/api/bikes/getAllBikes',{
+        method: 'POST',
+      });
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+      <Navbar onDataUpdate={handleDataUpdate} />
+      <ProductList data={data}/>
       <StatusBar style="auto" />
-    </View>
+      <BottomNavbar/>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#25292e',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+export default App;
