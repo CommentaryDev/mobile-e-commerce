@@ -6,13 +6,13 @@ const BottomNavbar = () => {
   return (
     <View style={styles.navbar}>
       <TouchableOpacity style={styles.iconContainer}>
-        <Feather name="user" size={24} color="black" />
+        <Feather name="user" size={24} color="white" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.iconContainer}>
-        <Feather name="list" size={24} color="black" />
+        <Feather name="list" size={24} color="white" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.iconContainer}>
-        <Feather name="shopping-cart" size={24} color="black" />
+        <Feather name="shopping-cart" size={24} color="white" />
       </TouchableOpacity>
     </View>
   );

@@ -1,12 +1,22 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import the icon you want to use
 
 const ProductCard = ({ item }) => {
   const { name, desc, imageURL, price } = item;
 
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavoritePress = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={handleFavoritePress} style={styles.favoriteButton}>
+        <Icon name={isFavorite ? "heart" : "heart-o"} size={30} color="#FF6347" />
+      </TouchableOpacity>
       <Image
         resizeMode='contain'
         style={styles.image}
@@ -28,6 +38,7 @@ const styles = StyleSheet.create({
     margin: 10,
     alignItems: 'center',
     elevation: 2,
+    position: 'relative', // Needed for absolute positioning
   },
   image: {
     height: scale(200),
@@ -47,9 +58,14 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#4CAF50', // Green color for price
+    color: '#4CAF50',
     marginTop: 5,
     textAlign: 'center',
+  },
+  favoriteButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
   },
 });
 
